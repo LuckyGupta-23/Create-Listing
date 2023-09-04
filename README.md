@@ -1,71 +1,71 @@
-import React, { useState, useEffect, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { useNavigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Layout from "../components/Layout";
-import { toast } from "react-toastify";
+import React, { useState, useEffect, useRef } from "react";<br>
+import { v4 as uuidv4 } from "uuid";<br>
+import { useNavigate } from "react-router-dom";<br>
+import { getAuth, onAuthStateChanged } from "firebase/auth";<br>
+import Layout from "../components/Layout";<br>
+import { toast } from "react-toastify";<br>
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
-} from "firebase/storage";
-import { db } from "../firebase.config";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+} from "firebase/storage";<br>
+import { db } from "../firebase.config";<br>
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";<br>
 
 const CreateListing = () => {
   const [formData, setFormData] = useState({
-    type: "rent",
-    name: "",
-    bedrooms: 1,
-    bathrooms: 1,
-    parking: false,
-    furnished: false,
-    address: "",
-    offer: false,
-    regularPrice: 0,
-    discountedPrice: 0,
-    images: {},
-  });
+    type: "rent",<br>
+    name: "",<br>
+    bedrooms: 1,<br>
+    bathrooms: 1,<br>
+    parking: false,<br>
+    furnished: false,<br>
+    address: "",<br>
+    offer: false,<br>
+    regularPrice: 0,<br>
+    discountedPrice: 0,<br>
+    images: {},<br>
+  });<br>
 
   const {
-    type,
-    name,
-    bedrooms,
-    bathrooms,
-    parking,
-    furnished,
-    address,
-    offer,
-    regularPrice,
-    discountedPrice,
-    images,
-  } = formData;
+    type,<br>
+    name,<br>
+    bedrooms,<br>
+    bathrooms,<br>
+    parking,<br>
+    furnished,<br>
+    address,<br>
+    offer,<br>
+    regularPrice,<br>
+    discountedPrice,<br>
+    images,<br>
+  } = formData;<br>
 
-  const auth = getAuth();
-  const navigate = useNavigate();
-  const isMounted = useRef(true);
+  const auth = getAuth();<br>
+  const navigate = useNavigate();<br>
+  const isMounted = useRef(true);<br>
 
   useEffect(() => {
     if (isMounted) {
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, (user) =><br> {
         setFormData({
-          ...formData,
-          useRef: user.uid,
-        });
+          ...formData,<br>
+          useRef: user.uid,<br>
+        });<br>
       });
-    } else {
+    <br>}<br> else {
       navigate("/SignIn");
-    }
+    }<br>
     // eslint-disable-next-line
   }, []);
 
-  //mutate func
+  //mutate func<br>
   const onChangeHandler = (e) => {
-    let boolean = null;
+    let boolean = null;<br>
     if (e.target.value === "true") {
       boolean = true;
-    }
+    }<br>
     if (e.target.value === "false") {
       boolean = false;
     }
@@ -87,19 +87,19 @@ const CreateListing = () => {
     }
   };
 
-  //form submit
+  //form submit<br>
   const onSubmit = async (e) => {
-    e.preventDefault();
-    // console.log(formData);
+    e.preventDefault();<br>
+    // console.log(formData);<br>
     if (discountedPrice >= regularPrice) {
       toast.error("Discount Price should be less than Regular Price");
       return;
-    }
+    }<br>
     if (images > 6) {
       toast.error("Max 6 Images can be selected");
       return;
-    }
-    let location;
+    }<br>
+    let location;<br>
     location = address;
 
     //store images to firebase storage
@@ -160,7 +160,7 @@ const CreateListing = () => {
   };
 
   return (
-    <Layout>
+   <br> <Layout>
       {/* sell rent button */}
       <form className="CreateListing-form" onSubmit={onSubmit}>
         <div className="form-check">
